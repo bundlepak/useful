@@ -1,3 +1,6 @@
+Making private scripts for money.
+Telegram: @bundlepak
+
 Don't forget set Key in settings.
 
 Dodge.lua
