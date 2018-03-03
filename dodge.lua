@@ -122,6 +122,15 @@ function Dodge.Defend(myHero, desc)
 				return
             end
 		end
+
+		if NPC.GetUnitName(myHero) == "npc_dota_hero_pugna" then
+            local dicri = NPC.GetAbilityByIndex(myHero, 1)
+            if desc and (Ability.GetName(desc) == "magnataur_reverse_polarity" or Ability.GetName(desc) == "axe_berserkers_call") and dicri and Ability.IsCastable(dicri, myMana) then
+				Ability.CastTarget(dicri, myHero)
+				delay = os.clock() + 2
+				return
+            end
+		end
 		
 		if NPC.GetUnitName(myHero) == "npc_dota_hero_gyrocopter" then
             local flak = NPC.GetAbilityByIndex(myHero, 2)
