@@ -8,7 +8,7 @@ function CourShield.OnUpdate()
 	if not CourShield.courier then
 		CourShield.findCourier(myHero)
 	end
-	if CourShield.courier and Entity.GetHealth(CourShield.courier) ~= Entity.GetMaxHealth(CourShield.courier) then
+	if CourShield.courier and Entity.IsNPC(CourShield.courier) and Entity.GetHealth(CourShield.courier) ~= Entity.GetMaxHealth(CourShield.courier) then
 		local shield = NPC.GetAbilityByIndex(CourShield.courier, 5)
 		if shield and Ability.IsReady(shield) then
 			Ability.CastNoTarget(shield)
