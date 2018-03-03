@@ -49,6 +49,7 @@ function disabler.Disable(myHero, enemy)
     local sky = NPC.GetAbility(myHero, "skywrath_mage_ancient_seal")
     local ns = NPC.GetAbility(myHero, "night_stalker_crippling_fear")
     local gyro = NPC.GetAbility(myHero, "gyrocopter_homing_missile")
+    local dk = NPC.GetAbility(myHero, "dragon_knight_dragon_tail")
     if sheepstick and Ability.IsReady(sheepstick) then
         Ability.CastTarget(sheepstick, enemy)
         delay = os.clock() + 2 return
@@ -76,6 +77,10 @@ function disabler.Disable(myHero, enemy)
     if NPC.GetUnitName(enemy) == "npc_dota_hero_slark" then return end
     if abyssal_blade and Ability.IsReady(abyssal_blade) then
         Ability.CastTarget(abyssal_blade, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if dk and Ability.IsReady(dk) and NPC.IsEntityInRange(myHero, enemy, 150) then
+        Ability.CastTarget(dk, enemy)
         delay = os.clock() + 2 return
     end 
     if bloodthorn and Ability.IsReady(bloodthorn) then
