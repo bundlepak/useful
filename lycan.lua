@@ -27,8 +27,10 @@ function lycan.OnUpdate()
     end
     
     if lycan.AttackingTarget then
-        if not Entity.IsAlive(lycan.AttackingTarget) or Entity.IsDormant(lycan.AttackingTarget) then
-            lycan.AttackingTarget = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+        if lycan.AttackingTarget then
+            if not Entity.IsAlive(lycan.AttackingTarget) or Entity.IsDormant(lycan.AttackingTarget) then
+                lycan.AttackingTarget = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+            end
         end
     end
     
