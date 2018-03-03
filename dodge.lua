@@ -149,7 +149,8 @@ function Dodge.Defend(myHero, desc)
 	end
 	
 	local bkb = NPC.GetItem(myHero, "item_black_king_bar", true)
-	if bkb and Ability.IsCastable(bkb, NPC.GetMana(myHero)) then
+	local aegis = NPC.GetItem(myHero, "item_aegis", true)
+	if not aegis and bkb and Ability.IsCastable(bkb, NPC.GetMana(myHero)) then
 			Ability.CastNoTarget(bkb)
 			delay = os.clock() + 2
 			return
