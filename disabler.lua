@@ -32,6 +32,11 @@ function disabler.OnUpdate()
             if slark and NPC.IsEntityInRange(myHero, enemy, 700) and Ability.GetCooldownLength(slark) > 2 and Ability.SecondsSinceLastUse(slark)<=1 and Ability.SecondsSinceLastUse(slark)>0 then
                 disabler.Disable(myHero, enemy)
             end
+            local qop = NPC.GetAbility(enemy, "queenofpain_blink")
+            if qop and NPC.IsEntityInRange(myHero, enemy, 700) and Ability.GetCooldownLength(qop) > 2 and Ability.SecondsSinceLastUse(qop)<=1 and Ability.SecondsSinceLastUse(qop)>0 then
+                disabler.Disable(myHero, enemy)
+            end
+            
         end 
     end 
 end
@@ -68,7 +73,7 @@ function disabler.Disable(myHero, enemy)
         Ability.CastTarget(shaman, enemy)
         delay = os.clock() + 2 return
     end 
-    if hurrican and Ability.IsReady(hurrican) and NPC.IsEntityInRange(myHero, enemy, 400) then
+    if hurrican and Ability.IsReady(hurrican) and NPC.IsEntityInRange(myHero, enemy, 350) then
         Ability.CastTarget(hurrican, enemy)
         return
     end 
@@ -97,7 +102,7 @@ function disabler.Disable(myHero, enemy)
         Ability.CastTarget(sky, enemy)
         delay = os.clock() + 2 return
     end 
-    if ns and Ability.IsReady(ns) and NPC.IsEntityInRange(myHero, enemy, 400) then
+    if ns and Ability.IsReady(ns) and NPC.IsEntityInRange(myHero, enemy, 350) then
         Ability.CastTarget(ns, enemy)
         delay = os.clock() + 2 return
     end 
