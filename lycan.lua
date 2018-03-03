@@ -107,16 +107,16 @@ function lycan.AttackTarget(enemy)
                             end
                     end
                 if NPC.HasAbility(npc, "centaur_khan_war_stomp") then
-                    local asd = NPC.GetAbility(npc, "centaur_khan_war_stomp")
-                    if NPC.IsEntityInRange(npc, enemy, 150) and Ability.IsReady(asd) then
-                        Ability.CastNoTarget(asd)
+                    local clap = NPC.GetAbility(npc, "centaur_khan_war_stomp")
+                    if NPC.IsEntityInRange(npc, enemy, 150) and Ability.IsReady(clap) then
+                        Ability.CastNoTarget(clap)
                         return
                     end
                 end
                 if NPC.HasAbility(npc, "polar_furbolg_ursa_warrior_thunder_clap") then
-                    local dsa = NPC.GetAbility(npc, "polar_furbolg_ursa_warrior_thunder_clap")
-                    if NPC.IsEntityInRange(npc, enemy, 200) and Ability.IsReady(dsa) then
-                        Ability.CastNoTarget(dsa)
+                    local clap = NPC.GetAbility(npc, "polar_furbolg_ursa_warrior_thunder_clap")
+                    if NPC.IsEntityInRange(npc, enemy, 200) and Ability.IsReady(clap) then
+                        Ability.CastNoTarget(clap)
                         return
                     end
                 end
