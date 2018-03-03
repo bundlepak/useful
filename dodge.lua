@@ -22,7 +22,7 @@ function Dodge.OnProjectile(projectile)
     projectileName == "windrunner_shackleshot" or
     projectileName == "chaos_knight_chaos_bolt" or
     projectileName == "sven_spell_storm_bolt" then
-        Dodge.Update({desc = ""; source = projectile.source})
+        Dodge.Update({source = projectile.source})
     end
 	
 end
@@ -86,8 +86,11 @@ function Dodge.TaskManagement(myHero)
 
 	local info = table.remove(msg_queue, 1)
 	if not info then return end
+	if info.desc then
+		desc = tostring(Ability.GetName(info.desc))
+	end
 
-	Dodge.Defend(myHero, info.desc)
+	Dodge.Defend(myHero, desc)
 end
 
 function Dodge.Update(info)
@@ -126,7 +129,7 @@ function Dodge.Defend(myHero, desc)
 		
 		if NPC.GetUnitName(myHero) == "npc_dota_hero_gyrocopter" then
             local flak = NPC.GetAbilityByIndex(myHero, 2)
-            if desc and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and flak and Ability.IsCastable(flak, myMana) then
+            if desc and (desc == "legion_commander_duel" or desc == "axe_berserkers_call") and flak and Ability.IsCastable(flak, myMana) then
 				Ability.CastNoTarget(flak)
 				return
             end
@@ -135,7 +138,7 @@ function Dodge.Defend(myHero, desc)
 	end
 
 	local sata = NPC.GetItem(myHero, "item_satanic", true)
-	if desc and sata and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and Ability.IsCastable(sata, NPC.GetMana(myHero)) then
+	if desc and sata and (desc == "legion_commander_duel" or desc == "axe_berserkers_call") and Ability.IsCastable(sata, NPC.GetMana(myHero)) then
 			Ability.CastNoTarget(sata)
 			return
 	end
