@@ -1,5 +1,4 @@
-Making private scripts for money.
-Telegram: @bundlepak
+
 
 Don't forget set Key in settings.
 
@@ -39,3 +38,4 @@ CourShield.lua
 Use courier shield when someone attack them.
 
 Subscribe to github for seen updates.
+Telegram: @bundlepak
