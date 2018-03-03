@@ -51,6 +51,7 @@ function disabler.Disable(myHero, enemy)
     local gyro = NPC.GetAbility(myHero, "gyrocopter_homing_missile")
     local dk = NPC.GetAbility(myHero, "dragon_knight_dragon_tail")
     local drow = NPC.GetAbility(myHero, "drow_ranger_wave_of_silence")
+    local lone = NPC.GetAbility(myHero, "lone_druid_savage_roar")
     if sheepstick and Ability.IsReady(sheepstick) then
         Ability.CastTarget(sheepstick, enemy)
         delay = os.clock() + 2 return
@@ -102,6 +103,10 @@ function disabler.Disable(myHero, enemy)
     end 
     if drow and Ability.IsReady(drow)then
         Ability.CastPosition(drow, Entity.GetAbsOrigin(enemy))
+        delay = os.clock() + 2 return
+    end 
+    if lone and Ability.IsReady(lone) and NPC.IsEntityInRange(myHero, enemy, 325) then
+        Ability.CastNoTarget(lone)
         delay = os.clock() + 2 return
     end 
 
