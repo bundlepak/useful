@@ -1,10 +1,8 @@
 local Dodge = {}
 
 local msg_queue = {}
-local DELTA = 0.05
-local ERROR = 0.2
 local time = 0
-local delayy = 0
+local delay = 0
 
 function Dodge.OnProjectile(projectile)
 	if not projectile or not projectile.target then return end
@@ -24,7 +22,7 @@ function Dodge.OnProjectile(projectile)
     projectileName == "windrunner_shackleshot" or
     projectileName == "chaos_knight_chaos_bolt" or
     projectileName == "sven_spell_storm_bolt" then
-        Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = projectile.source})
+        Dodge.Update({desc = ""; source = projectile.source})
     end
 	
 end
@@ -48,13 +46,13 @@ function Dodge.OnUpdate()
 			local call_range = 300
 			if axe_call and Ability.IsInAbilityPhase(axe_call)
 				and NPC.IsEntityInRange(myHero, enemy, call_range) then
-				Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = enemy})
+				Dodge.Update({desc = axe_call; source = enemy})
 			end
 			local polarity = NPC.GetAbility(enemy, "magnataur_reverse_polarity")
 			local polarity_range = 410
 			if polarity and Ability.IsInAbilityPhase(polarity)
 				and NPC.IsEntityInRange(myHero, enemy, polarity_range) then
-				Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = enemy})
+				Dodge.Update({desc = polarity; source = enemy})
 			end
 			
 
@@ -62,21 +60,21 @@ function Dodge.OnUpdate()
 			local lasso_range = 200
 			if lasso and Ability.IsInAbilityPhase(lasso)
 				and NPC.IsEntityInRange(myHero, enemy, lasso_range) then
-				Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = enemy})
+				Dodge.Update({desc = lasso; source = enemy})
 			end
 
 			local duel = NPC.GetAbility(enemy, "legion_commander_duel")
 			local duel_range = 150
 			if duel and Ability.IsInAbilityPhase(duel)
 				and NPC.IsEntityInRange(myHero, enemy, duel_range) then
-				Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = enemy})
+				Dodge.Update({desc = duel; source = enemy})
 			end
 
 			local crush = NPC.GetAbility(enemy, "slardar_slithereen_crush")
 			local crush_range = 350
 			if crush and Ability.IsInAbilityPhase(crush)
 				and NPC.IsEntityInRange(myHero, enemy, crush_range) then
-				Dodge.Update({time = GameRules.GetGameTime(); delay = 0; desc = ""; source = enemy})
+				Dodge.Update({desc = crush; source = enemy})
 			end			
 		end
 	end
@@ -87,16 +85,9 @@ function Dodge.TaskManagement(myHero)
 	if not msg_queue or #msg_queue <= 0 then return end
 
 	local info = table.remove(msg_queue, 1)
-	if not info or not info.time or not info.delay then return end
+	if not info then return end
 
-	local currentTime = GameRules.GetGameTime()
-	local diff = info.delay - ERROR
-	local executeTime = info.time + math.max(diff, 0)
-
-	if currentTime > executeTime + DELTA then return end
-	if currentTime < executeTime - DELTA then Dodge.Update(info) return end
-
-	Dodge.Defend(myHero, info.source)
+	Dodge.Defend(myHero, info.source, info.desc)
 end
 
 function Dodge.Update(info)
@@ -108,10 +99,10 @@ function Dodge.Update(info)
 	table.insert(msg_queue, info)
 end
 
-function Dodge.Defend(myHero, source)
+function Dodge.Defend(myHero, source, desc)
     if not myHero then return end
 	local myMana = NPC.GetMana(myHero)
-	if time < delayy then return end
+	if time < delay then return end
 
     if not NPC.IsSilenced(myHero) then 
         
@@ -119,7 +110,7 @@ function Dodge.Defend(myHero, source)
             local rage = NPC.GetAbilityByIndex(myHero, 0)
             if rage and Ability.IsCastable(rage, myMana) then
 				Ability.CastNoTarget(rage)
-				delayy = os.clock() + 2
+				delay = os.clock() + 2
 				return
             end
 		end
@@ -128,18 +119,34 @@ function Dodge.Defend(myHero, source)
             local spin = NPC.GetAbilityByIndex(myHero, 0)
             if spin and Ability.IsCastable(spin, myMana) then
 				Ability.CastNoTarget(spin)
-				delayy = os.clock() + 2
+				delay = os.clock() + 2
+				return
+            end
+		end
+		
+		if NPC.GetUnitName(myHero) == "npc_dota_hero_gyrocopter" then
+            local flak = NPC.GetAbilityByIndex(myHero, 2)
+            if desc and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and flak and Ability.IsCastable(flak, myMana) then
+				Ability.CastNoTarget(flak)
 				return
             end
         end
 
+	end
+
+	local sata = NPC.GetItem(myHero, "item_satanic", true)
+	if desc and sata and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and Ability.IsCastable(sata, NPC.GetMana(myHero)) then
+		if source then
+			Ability.CastNoTarget(sata)
+			return
+		end
 	end
 	
 	local bkb = NPC.GetItem(myHero, "item_black_king_bar", true)
 	if bkb and Ability.IsCastable(bkb, NPC.GetMana(myHero)) then
 		if source then
 			Ability.CastNoTarget(bkb)
-			delayy = os.clock() + 2
+			delay = os.clock() + 2
 			return
 		end
 	end
@@ -148,7 +155,7 @@ function Dodge.Defend(myHero, source)
 	if item and Ability.IsCastable(item, NPC.GetMana(myHero)) then
 		if source then
 			Ability.CastNoTarget(item)
-			delayy = os.clock() + 2
+			delay = os.clock() + 2
 			return
 		end
 	end
