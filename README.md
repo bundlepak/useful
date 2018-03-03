@@ -33,6 +33,10 @@ Terror.lua
 [No Key]
 Use sunder when low hp.
 
+Ember.lua
+[No Key]
+Auto chains when use fist and close to enemy.
+
 CourShield.lua
 [No Key]
 Use courier shield when someone attack them.
