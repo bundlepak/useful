@@ -1,0 +1,103 @@
+local disabler= {}
+
+local time = 0
+local delay = 0
+
+function disabler.OnUpdate()
+    local myHero = Heroes.GetLocal()
+    if not myHero then return end
+    time = os.clock()
+    local myTeam = Entity.GetTeamNum(myHero)
+    for i= 1, Heroes.Count() do
+        local enemy = Heroes.Get(i)
+        local sameTeam = Entity.GetTeamNum(enemy) == myTeam
+        if not sameTeam and not NPC.IsDormant(enemy) and Entity.GetHealth(enemy) > 0 then
+            local dagger = NPC.GetItem(enemy,"item_blink")
+            if dagger and NPC.IsEntityInRange(myHero, enemy, 400) and Ability.GetCooldownLength(dagger) > 2 and Ability.SecondsSinceLastUse(dagger)<=1 and Ability.SecondsSinceLastUse(dagger)>0 then
+                disabler.Disable(myHero, enemy)
+            end 
+            local ck = NPC.GetAbility(enemy, "chaos_knight_reality_rift")
+            if ck and NPC.IsEntityInRange(myHero, enemy, 400) and Ability.GetCooldownLength(ck) > 2 and Ability.SecondsSinceLastUse(ck)<=1 and Ability.SecondsSinceLastUse(ck)>0 then
+                disabler.Disable(myHero, enemy)
+            end
+            local void = NPC.GetAbility(enemy, "faceless_void_time_walk")
+            if void and NPC.IsEntityInRange(myHero, enemy, 400) and Ability.GetCooldownLength(void) > 2 and Ability.SecondsSinceLastUse(void)<=1 and Ability.SecondsSinceLastUse(void)>0 then
+                disabler.Disable(myHero, enemy)
+            end
+            local pa = NPC.GetAbility(enemy, "phantom_assassin_phantom_strike")
+            if pa and NPC.IsEntityInRange(myHero, enemy, 400) and Ability.GetCooldownLength(pa) > 2 and Ability.SecondsSinceLastUse(pa)<=1 and Ability.SecondsSinceLastUse(pa)>0 then
+                disabler.Disable(myHero, enemy)
+            end
+            local slark = NPC.GetAbility(enemy, "slark_pounce")
+            if slark and NPC.IsEntityInRange(myHero, enemy, 400) and Ability.GetCooldownLength(slark) > 2 and Ability.SecondsSinceLastUse(slark)<=1 and Ability.SecondsSinceLastUse(slark)>0 then
+                disabler.Disable(myHero, enemy)
+            end
+        end 
+    end 
+end
+
+function disabler.Disable(myHero, enemy)
+    if time < delay then return end
+    if NPC.IsLinkensProtected(enemy) or NPC.HasModifier(enemy, "modifier_item_lotus_orb") or NPC.HasState(enemy, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) or disabler.IsDisabled(enemy) then return end
+    local hurrican = NPC.GetItem(myHero,"item_hurricane_pike")
+    local bloodthorn = NPC.GetItem(myHero,"item_bloodthorn")
+    local orchid = NPC.GetItem(myHero,"item_orchid")
+    local sheepstick = NPC.GetItem(myHero,"item_sheepstick")
+    local abyssal_blade = NPC.GetItem(myHero,"	item_abyssal_blade")
+    local lion = NPC.GetAbility(myHero, "lion_voodoo")
+    local shaman = NPC.GetAbility(myHero, "shadow_shaman_voodoo")
+    local sky = NPC.GetAbility(myHero, "skywrath_mage_ancient_seal")
+    local ns = NPC.GetAbility(myHero, "night_stalker_crippling_fear")
+    if sheepstick and Ability.IsReady(sheepstick) then
+        Ability.CastTarget(sheepstick, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if lion and Ability.IsReady(lion) then
+        Ability.CastTarget(lion, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if hurrican and Ability.IsReady(hurrican) then
+        Ability.CastTarget(hurrican, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if shaman and Ability.IsReady(shaman) then
+        Ability.CastTarget(shaman, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if hurrican and Ability.IsReady(hurrican) then
+        Ability.CastTarget(hurrican, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if NPC.GetUnitName(enemy) == "npc_dota_hero_slark" then return end
+    if abyssal_blade and Ability.IsReady(abyssal_blade) then
+        Ability.CastTarget(abyssal_blade, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if bloodthorn and Ability.IsReady(bloodthorn) then
+        Ability.CastTarget(bloodthorn, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if orchid and Ability.IsReady(orchid) then
+        Ability.CastTarget(orchid, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if sky and Ability.IsReady(sky) then
+        Ability.CastTarget(sky, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if ns and Ability.IsReady(ns) then
+        Ability.CastTarget(ns, enemy)
+        delay = os.clock() + 2 return
+    end 
+end
+
+function disabler.IsDisabled(enemy)
+    if not Entity.IsAlive(enemy) then return true end
+    if NPC.IsStunned(enemy) then return true end
+    if NPC.HasState(enemy, Enum.ModifierState.MODIFIER_STATE_HEXED) then return true end
+    if NPC.HasState(enemy, Enum.ModifierState.MODIFIER_STATE_SILENCED) then return true end
+    return false
+  end
+
+
+return disabler
