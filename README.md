@@ -33,6 +33,10 @@ Terror.lua
 [No Key]
 Use sunder when low hp.
 
+Clinkz.lua
+[No Key]
+Use items when u attack enemy.
+
 Ember.lua
 [No Key]
 Auto chains when use fist and close to enemy.
