@@ -41,6 +41,11 @@ Ember.lua
 [No Key]
 Auto chains when use fist and close to enemy.
 
+Morph.lua
+[No Key]
+Auto kill enemy with e-blade and W. 
+Dont let u use shift in AA ulti.
+
 CourShield.lua
 [No Key]
 Use courier shield when someone attack them.
