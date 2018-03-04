@@ -57,6 +57,7 @@ function disabler.Disable(myHero, enemy)
     local dk = NPC.GetAbility(myHero, "dragon_knight_dragon_tail")
     local drow = NPC.GetAbility(myHero, "drow_ranger_wave_of_silence")
     local lone = NPC.GetAbility(myHero, "lone_druid_savage_roar")
+    local razor = NPC.GetAbility(myHero, "razor_static_link")
     if sheepstick and Ability.IsReady(sheepstick) then
         Ability.CastTarget(sheepstick, enemy)
         delay = os.clock() + 2 return
@@ -71,6 +72,10 @@ function disabler.Disable(myHero, enemy)
     end 
     if shaman and Ability.IsReady(shaman) then
         Ability.CastTarget(shaman, enemy)
+        delay = os.clock() + 2 return
+    end 
+    if razor and Ability.IsReady(razor) then
+        Ability.CastTarget(razor, enemy)
         delay = os.clock() + 2 return
     end 
     if hurrican and Ability.IsReady(hurrican) and NPC.IsEntityInRange(myHero, enemy, 350) then
