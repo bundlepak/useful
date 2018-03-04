@@ -5,7 +5,7 @@ Don't forget set Key in settings.
 Dodge.lua
 [No Key]
 Just simple Dodge for some disables
-Juggernaut, Lifestealer, Bkb, Gyro, BM, Satanic, Pugna.
+Juggernaut, Lifestealer, Bkb, Gyro, BM, Satanic, Pugna, Morph.
 
 Disabler.lua
 [No Key]
