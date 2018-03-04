@@ -48,6 +48,12 @@ function Dodge.OnUpdate()
 				and NPC.IsEntityInRange(myHero, enemy, call_range) then
 				Dodge.Update({desc = axe_call})
 			end
+			local puck = NPC.GetAbility(enemy, "puck_waning_rift")
+			local puck_range = 300
+			if puck and Ability.IsInAbilityPhase(puck)
+				and NPC.IsEntityInRange(myHero, enemy, puck_range) then
+				Dodge.Update({desc = puck})
+			end
 			local polarity = NPC.GetAbility(enemy, "magnataur_reverse_polarity")
 			local polarity_range = 410
 			if polarity and Ability.IsInAbilityPhase(polarity)
@@ -55,7 +61,6 @@ function Dodge.OnUpdate()
 				Dodge.Update({desc = polarity})
 			end
 			
-
 			local lasso = NPC.GetAbility(enemy, "batrider_flaming_lasso")
 			local lasso_range = 200
 			if lasso and Ability.IsInAbilityPhase(lasso)
@@ -131,6 +136,15 @@ function Dodge.Defend(myHero, desc)
 				return
             end
 		end
+
+		if NPC.GetUnitName(myHero) == "npc_dota_hero_morphling" then
+            local morph2 = NPC.GetAbilityByIndex(myHero, 4)
+			if morph2 and not Ability.GetToggleState(morph2) then
+				Ability.Toggle(morph2, true)
+				delay = os.clock() + 0.1
+				return
+            end
+		end
 		
 		if NPC.GetUnitName(myHero) == "npc_dota_hero_gyrocopter" then
             local flak = NPC.GetAbilityByIndex(myHero, 2)
@@ -143,24 +157,25 @@ function Dodge.Defend(myHero, desc)
 	end
 
 	local sata = NPC.GetItem(myHero, "item_satanic", true)
-	if desc and sata and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and Ability.IsCastable(sata, NPC.GetMana(myHero)) then
-			Ability.CastNoTarget(sata)
-			return
+	if desc  and sata and (Ability.GetName(desc) == "legion_commander_duel" or Ability.GetName(desc) == "axe_berserkers_call") and Ability.IsCastable(sata, NPC.GetMana(myHero)) then
+		Ability.CastNoTarget(sata)
+		return
 	end
 	
 	local bkb = NPC.GetItem(myHero, "item_black_king_bar", true)
 	local aegis = NPC.GetItem(myHero, "item_aegis", true)
 	if not aegis and bkb and Ability.IsCastable(bkb, NPC.GetMana(myHero)) then
-			Ability.CastNoTarget(bkb)
-			delay = os.clock() + 2
-			return
+		if desc and Ability.GetName(desc) == "puck_waning_rift" then return end
+		Ability.CastNoTarget(bkb)
+		delay = os.clock() + 2
+		return
 	end
     
 	local item = NPC.GetItem(myHero, "item_blade_mail", true)
 	if item and Ability.IsCastable(item, NPC.GetMana(myHero)) then
-			Ability.CastNoTarget(item)
-			delay = os.clock() + 2
-			return
+		Ability.CastNoTarget(item)
+		delay = os.clock() + 2
+		return
 	end
 end
 
