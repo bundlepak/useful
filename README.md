@@ -43,9 +43,9 @@ Auto chains when use fist and close to enemy.
 
 Morph.lua
 [No Key]
-Auto kill enemy with e-blade and W.
-AutoMaxRangeWave, working like max blink range.
-Dont let u use shift in AA ulti.
+Auto kill - kill enemy with e-blade and W.
+AutoMaxRangeWave - working like max blink range.
+AASafe - Dont let u use shift in AA ulti.
 
 CourShield.lua
 [No Key]
