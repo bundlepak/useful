@@ -47,8 +47,4 @@ Auto kill - kill enemy with e-blade and W.
 AutoMaxRangeWave - working like max blink range.
 AASafe - Dont let u use shift in AA ulti.
 
-CourShield.lua
-[No Key]
-Use courier shield when someone attack them.
-
 Subscribe to github for seen updates.
