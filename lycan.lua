@@ -45,6 +45,7 @@ function lycan.OnUpdate()
 end
 
 function lycan.AttackTarget(enemy)
+    if not enemy then return end
     local myHero = Heroes.GetLocal()
             for _, npc in ipairs(NPC.GetUnitsInRadius(myHero, 99999, Enum.TeamType.TEAM_FRIEND)) do
                 if Entity.IsAlive(npc) and not Entity.IsDormant(npc) and Entity.GetHealth(npc) and (Entity.GetOwner(myHero) == Entity.GetOwner(npc) or Entity.OwnedBy(npc, myHero)) then
