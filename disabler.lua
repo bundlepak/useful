@@ -58,6 +58,11 @@ function disabler.Disable(myHero, enemy)
     local drow = NPC.GetAbility(myHero, "drow_ranger_wave_of_silence")
     local lone = NPC.GetAbility(myHero, "lone_druid_savage_roar")
     local razor = NPC.GetAbility(myHero, "razor_static_link")
+    local storm = NPC.GetAbility(myHero, "storm_spirit_electric_vortex")
+    if storm and Ability.IsReady(storm) then
+        Ability.CastTarget(storm, enemy)
+        delay = os.clock() + 2 return
+    end 
     if sheepstick and Ability.IsReady(sheepstick) then
         Ability.CastTarget(sheepstick, enemy)
         delay = os.clock() + 2 return

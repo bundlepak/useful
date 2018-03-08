@@ -13,11 +13,11 @@ Simple disabler for initiators.
 Hex(Lion,Item,Shaman), Silence(Bloodthorn,Sky,Ns, Orchid,drow), Stun(abyssal, gyro,lone,dk), Hurricane
 
 LC.lua
-[Key]
+[Key] combo
 LC combo, added nullifier. Delete some not useful code.
 
 Lycan.lua
-[Key]
+[Key] Turn on/off
 Press key, all units will attack closest hero to your cursor, use abilities.
 Necro and satyr wait modifier for purge.
 
@@ -46,5 +46,9 @@ Morph.lua
 Auto kill - kill enemy with e-blade and W.
 AutoMaxRangeWave - working like max blink range.
 AASafe - Dont let u use shift in AA ulti.
+
+stormspirit.lua
+[Key] Turn on/off
+Use items/spells when u attack enemy. Overload abuse.
 
 Subscribe to github for seen updates.
