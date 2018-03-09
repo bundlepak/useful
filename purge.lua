@@ -45,7 +45,7 @@ function AutoPurge.Units(myHero, enemy)
             local name = NPC.GetUnitName(entity)
             if name == "npc_dota_hero_arc_warden" and myHero~= entity  then
 				local nullifier = NPC.GetItem(entity, "item_nullifier", true) 
-				if nullifier and Abili1ty.IsReady(nullifier) and NPC.IsEntityInRange(entity, enemy, 600) then
+				if nullifier and Ability.IsReady(nullifier) and NPC.IsEntityInRange(entity, enemy, 600) then
 					if (NPC.HasModifier(enemy, "modifier_ghost_state") or 
 					NPC.HasModifier(enemy, "modifier_eul_cyclone") or 
 					NPC.HasModifier(enemy, "modifier_item_ethereal_blade_ethereal") or
