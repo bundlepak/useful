@@ -57,7 +57,7 @@ function storm_spirit.Combo(myHero, target)
 					if Hex and Ability.IsCastable(Hex, myMana) and not NPC.IsStunned(target) then Ability.CastTarget(Hex, target) end
 					if Orchid and Ability.IsCastable(Orchid, myMana) then Ability.CastTarget(Orchid,target) end
 					if BloodThorn and Ability.IsCastable(BloodThorn, myMana) then Ability.CastTarget(BloodThorn,target) end
-					if nullif and Ability.IsCastable(nullif, myMana) then Ability.CastTarget(nullif, target) end
+					if nullif and Ability.IsCastable(nullif, myMana) and not NPC.HasState(target, Enum.ModifierState.MODIFIER_STATE_HEXED) then Ability.CastTarget(nullif, target) end
 					if RoA and Ability.IsCastable(RoA, myMana) then Ability.CastTarget(RoA, target) end
 				end
 			end
