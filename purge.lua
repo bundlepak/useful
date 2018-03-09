@@ -9,8 +9,6 @@ function AutoPurge.OnUpdate()
 	local enemy = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
 	if not enemy then return end
 	AutoPurge.Combo(myHero, enemy)
-	if delay > time then return end
-	AutoPurge.Units(myHero, enemy)
 end	
 
 function AutoPurge.Combo(myHero, enemy)
@@ -26,16 +24,22 @@ function AutoPurge.Combo(myHero, enemy)
 	   NPC.HasModifier(enemy, "modifier_item_ethereal_blade_ethereal") or
 	   NPC.HasModifier(enemy, "modifier_necrolyte_sadist_active")or
 	   NPC.HasModifier(enemy, "modifier_omninight_guardian_angel") or
+	   NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
 	   NPC.HasModifier(enemy, "modifier_item_glimmer_cape_fade")) 
 	   then
 			if NPC.IsLinkensProtected(enemy) or NPC.HasModifier(enemy, "modifier_item_lotus_orb") or NPC.HasState(enemy, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) then return end
 			if nullifier and Ability.IsReady(nullifier) and NPC.IsEntityInRange(enemy, myHero, Ability.GetCastRange(nullifier)) then
 				Ability.CastTarget(nullifier, enemy) 
+				delay = os.clock() + 2
 				return 
 			elseif satyrpurge and Ability.IsReady(satyrpurge) and NPC.IsEntityInRange(enemy, myHero, Ability.GetCastRange(satyrpurge)) then
 				Ability.CastTarget(satyrpurge, enemy)
+				delay = os.clock() + 2
+				return
 			end
 	end
+	if delay > time then return end
+	AutoPurge.Units(myHero, enemy)
 end
 
 function AutoPurge.Units(myHero, enemy)
@@ -51,8 +55,10 @@ function AutoPurge.Units(myHero, enemy)
 					NPC.HasModifier(enemy, "modifier_item_ethereal_blade_ethereal") or
 					NPC.HasModifier(enemy, "modifier_necrolyte_sadist_active")or
 					NPC.HasModifier(enemy, "modifier_omninight_guardian_angel") or
+					NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
 					NPC.HasModifier(enemy, "modifier_item_glimmer_cape_fade")) then
 						Ability.CastTarget(nullifier, enemy)
+						return
 					end
 				end
             end
@@ -69,6 +75,7 @@ function AutoPurge.Units(myHero, enemy)
 				NPC.HasModifier(enemy, "modifier_windrunner_windrun")or
 				NPC.HasModifier(enemy, "modifier_windrunner_windrun_invis") or
 				NPC.HasModifier(enemy, "modifier_sven_warcry")or
+				NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
 				NPC.HasModifier(enemy, "modifier_lich_frost_armor") or
 				NPC.HasModifier(enemy, "modifier_item_solar_crest_armor_addition")or
 				NPC.HasModifier(enemy, "modifier_ogre_magi_frost_armor") or
@@ -89,6 +96,7 @@ function AutoPurge.Units(myHero, enemy)
 				NPC.HasModifier(enemy, "modifier_windrunner_windrun")or
 				NPC.HasModifier(enemy, "modifier_windrunner_windrun_invis") or
 				NPC.HasModifier(enemy, "modifier_sven_warcry")or
+				NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
 				NPC.HasModifier(enemy, "modifier_lich_frost_armor") or
 				NPC.HasModifier(enemy, "modifier_item_solar_crest_armor_addition")or
 				NPC.HasModifier(enemy, "modifier_ogre_magi_frost_armor") or
@@ -104,4 +112,5 @@ function AutoPurge.Units(myHero, enemy)
 	end
 	delay = os.clock() + 0.1
 end
+
 return AutoPurge

@@ -72,6 +72,7 @@ function lycan.AttackTarget(enemy)
                                         NPC.HasModifier(enemy, "modifier_omninight_guardian_angel") or
                                         NPC.HasModifier(enemy, "modifier_windrunner_windrun")or
                                         NPC.HasModifier(enemy, "modifier_windrunner_windrun_invis") or
+                                        NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
                                         NPC.HasModifier(enemy, "modifier_sven_warcry")or
                                         NPC.HasModifier(enemy, "modifier_lich_frost_armor") or
                                         NPC.HasModifier(enemy, "modifier_item_solar_crest_armor_addition")or
@@ -91,6 +92,7 @@ function lycan.AttackTarget(enemy)
                                     NPC.HasModifier(enemy, "modifier_omninight_guardian_angel") or
                                     NPC.HasModifier(enemy, "modifier_windrunner_windrun")or
                                     NPC.HasModifier(enemy, "modifier_windrunner_windrun_invis") or
+                                    NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
                                     NPC.HasModifier(enemy, "modifier_sven_warcry")or
                                     NPC.HasModifier(enemy, "modifier_lich_frost_armor") or
                                     NPC.HasModifier(enemy, "modifier_item_solar_crest_armor_addition")or
