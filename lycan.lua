@@ -11,36 +11,36 @@ delayq = 0
 function lycan.OnUpdate()
     local myHero = Heroes.GetLocal()
     if not myHero then return end
-    if not NPC.GetUnitName(myHero) == "npc_dota_hero_lycan" then return end
     time = os.clock()
-    
-    if Menu.IsKeyDownOnce(lycan.ComboKey) then
-        if not lycan.Attacking then
-            lycan.Attacking = true
-            lycan.AttackingTarget = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
-        else
-            lycan.Attacking = not lycan.Attacking
+    if NPC.GetUnitName(myHero) == "npc_dota_hero_lycan" then
+        if Menu.IsKeyDownOnce(lycan.ComboKey) then
             if not lycan.Attacking then
-                lycan.AttackingTarget = nil
-            end
-        end
-    end
-    
-    if lycan.AttackingTarget then
-        if lycan.AttackingTarget then
-            if not Entity.IsAlive(lycan.AttackingTarget) or Entity.IsDormant(lycan.AttackingTarget) then
+                lycan.Attacking = true
                 lycan.AttackingTarget = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+            else
+                lycan.Attacking = not lycan.Attacking
+                if not lycan.Attacking then
+                    lycan.AttackingTarget = nil
+                end
             end
         end
-    end
-    
-    if time > delayq then
-        lycan.AutoRaiseDead()
-        delayq = os.clock() + 0.2
-    end
-    if lycan.Attacking and time > delay then
-        lycan.AttackTarget(lycan.AttackingTarget)
-        delay = os.clock() + 0.5
+        
+        if lycan.AttackingTarget then
+            if lycan.AttackingTarget then
+                if not Entity.IsAlive(lycan.AttackingTarget) or Entity.IsDormant(lycan.AttackingTarget) then
+                    lycan.AttackingTarget = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+                end
+            end
+        end
+        
+        if time > delayq then
+            lycan.AutoRaiseDead()
+            delayq = os.clock() + 0.2
+        end
+        if lycan.Attacking and time > delay then
+            lycan.AttackTarget(lycan.AttackingTarget)
+            delay = os.clock() + 0.5
+        end
     end
 end
 
