@@ -23,7 +23,7 @@ Necro and satyr wait modifier for purge.
 
 Purge.lua
 [No Key]
-Simple purge with nullifier, necro, doom satyr, satyr.
+Simple purge with nullifier, necro, doom satyr, satyr, arc clone nullifier.
 
 Roshan.lua
 [No Key]
