@@ -2,6 +2,11 @@
 
 Don't forget set Key in settings.
 
+arc.lua
+[Key] Combo
+My version @k5dash arc script.
+Clone combo, use midas, show cd.
+
 Dodge.lua
 [No Key]
 Just simple Dodge for some disables. 
