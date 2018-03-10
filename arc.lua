@@ -5,7 +5,8 @@ ArcHelper.optionAutoUseCloneMidas = Menu.AddOption({ "Hero Specific","Arc Warden
 ArcHelper.optionAutoDefend = Menu.AddOption({ "Hero Specific","Arc Warden"}, "Clone autodefend", "Autoorchid/autohex etc.")
  
 ArcHelper.cache = {}
- 
+time = 0
+delay = 0
 ArcHelper.clone = nil
 ArcHelper.Attacking = false
 ArcHelper.AttackingTarget = nil
@@ -27,8 +28,15 @@ function ArcHelper.OnUpdate()
     if myHero == nill then return end
     local myName = NPC.GetUnitName(myHero)
     if myName ~= "npc_dota_hero_arc_warden" then return end
- 
+    time = os.clock()
     local ultimate = NPC.GetAbilityByIndex(myHero,5)
+
+    if Menu.IsEnabled(ArcHelper.optionAutoUseCloneMidas) then 
+        if time < delay then return end
+        ArcHelper.useMidas(ArcHelper.clone) 
+        ArcHelper.useMidas(myHero) 
+        delay = os.clock() + 0.1
+    end
 
     if Menu.IsKeyDownOnce(ArcHelper.optionKey) then
         if not ArcHelper.Attacking then
@@ -63,7 +71,7 @@ function ArcHelper.OnUpdate()
         return
     end
  
-    if Menu.IsEnabled(ArcHelper.optionAutoUseCloneMidas) then ArcHelper.useMidas(ArcHelper.clone) end
+    
     ArcHelper.cloneAttack()
 end
  
@@ -376,13 +384,12 @@ function ArcHelper.useMidas(myHero)
     if NPC.HasModifier(myHero,"modifier_item_silver_edge_windwalk") or NPC.HasModifier(myHero,"modifier_item_invisibility_edge_windwalk") then return end
     local midas = NPC.GetItem(myHero, "item_hand_of_midas")
     if not midas then return end
-    for i= 1, NPCs.Count() do
-        local entity = NPCs.Get(i)
+    local teamNum = Entity.GetTeamNum(myHero)
+    local entity = Input.GetNearestUnitToCursor(teamNum, Enum.TeamType.TEAM_ENEMY)
         if ArcHelper.isMidasableCreep(myHero, entity) and Ability.IsReady(midas) then
             Ability.CastTarget(midas, entity)
             return
         end
-    end
 end
  
 function ArcHelper.isMidasableCreep(myHero, entity)
@@ -392,7 +399,7 @@ function ArcHelper.isMidasableCreep(myHero, entity)
         or NPC.IsLaneCreep(entity)
         or NPC.IsNeutral(entity))
         and not NPC.IsAncient(entity)
-        and NPC.IsEntityInRange(myHero, entity, 1000) then
+        and NPC.IsEntityInRange(myHero, entity, 800) then
             local name = NPC.GetUnitName(entity)
             local w, h = Renderer.GetScreenSize()
             if name == "npc_dota_neutral_black_dragon"
