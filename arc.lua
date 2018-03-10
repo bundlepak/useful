@@ -47,9 +47,6 @@ function ArcHelper.OnUpdate()
         end
     end
 
-    if ArcHelper.Attacking and ultimate and Ability.IsReady(ultimate) then
-        Ability.CastNoTarget(ultimate)
-    end
 
     if ArcHelper.clone == nil and ultimate and Ability.GetLevel(ultimate)>0 then
         for i= 1, NPCs.Count() do
