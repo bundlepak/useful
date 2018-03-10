@@ -44,25 +44,6 @@ end
 
 function AutoPurge.Units(myHero, enemy)
 	if not enemy then return end
-        for i= 1, NPCs.Count() do
-            local entity = NPCs.Get(i)
-            local name = NPC.GetUnitName(entity)
-            if name == "npc_dota_hero_arc_warden" and myHero~= entity  then
-				local nullifier = NPC.GetItem(entity, "item_nullifier", true) 
-				if nullifier and Ability.IsReady(nullifier) and NPC.IsEntityInRange(entity, enemy, 600) then
-					if (NPC.HasModifier(enemy, "modifier_ghost_state") or 
-					NPC.HasModifier(enemy, "modifier_eul_cyclone") or 
-					NPC.HasModifier(enemy, "modifier_item_ethereal_blade_ethereal") or
-					NPC.HasModifier(enemy, "modifier_necrolyte_sadist_active")or
-					NPC.HasModifier(enemy, "modifier_omninight_guardian_angel") or
-					NPC.HasModifier(enemy, "modifier_item_aeon_disk_buff") or
-					NPC.HasModifier(enemy, "modifier_item_glimmer_cape_fade")) then
-						Ability.CastTarget(nullifier, enemy)
-						return
-					end
-				end
-            end
-        end
 	for _, npc in ipairs(NPC.GetUnitsInRadius(myHero, 99999, Enum.TeamType.TEAM_FRIEND)) do
 		if Entity.IsAlive(npc) and not Entity.IsDormant(npc) and Entity.GetHealth(npc) and (Entity.GetOwner(myHero) == Entity.GetOwner(npc) or Entity.OwnedBy(npc, myHero)) then
 			if NPC.IsLinkensProtected(enemy) or NPC.HasModifier(enemy, "modifier_item_lotus_orb") or NPC.HasState(enemy, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) then return end
