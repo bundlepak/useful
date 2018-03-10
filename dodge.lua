@@ -108,7 +108,7 @@ function Dodge.Defend(myHero, desc)
 	local myMana = NPC.GetMana(myHero)
 	if time < delay then return end
 
-    if not NPC.IsSilenced(myHero) then 
+	if not NPC.IsSilenced(myHero) then 
         
         if NPC.GetUnitName(myHero) == "npc_dota_hero_life_stealer" then
             local rage = NPC.GetAbilityByIndex(myHero, 0)
